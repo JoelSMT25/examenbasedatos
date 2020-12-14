@@ -1,0 +1,628 @@
+create table tipo_comida(
+    id_tipocomida  number primary key,
+    nombre_tipocomida   varchar(30)
+);
+
+create table tipo_empleado(
+    id_tipoempleado number primary key,
+    nombre_tipoempleado varchar2(30)
+);
+
+CREATE TABLE tipo_clientes(
+    id_tipocliente number primary key,
+    nombre_tipocliente varchar2(40)
+);
+-----------------------------
+create table comida(
+    id_comida           number primary key,
+    nombre_comida       varchar2(50),
+    descripcion_comida  varchar2(50),
+    precio_comida       number(8,2),
+    id_tipocomida       number references tipo_comida
+);
+
+CREATE TABLE empleado(
+    id_empleado     NUMBER PRIMARY KEY,
+    nombre_empleado      VARCHAR2(30),
+    apellido_empleado    VARCHAR2(50),
+    DNI_empleado        number,
+    sexo_empleado        CHAR,
+    direccion_empleado   VARCHAR2(50),
+    telefono_empleado    VARCHAR2(14),
+    clave_empleado       VARCHAR2(30),
+    id_tipoempleado     number references tipo_empleado
+);
+
+CREATE TABLE clientes(
+    id_numerocliente NUMBER PRIMARY KEY,
+    nombre_cliente VARCHAR2(30),
+    apellidoc_liente VARCHAR(30),
+    DNI_cliente number,
+    sexo_cliente CHAR,
+    direccion_cliente VARCHAR2(30),
+    telefono_cliente NUMBER,
+    id_tipocliente NUMBER REFERENCES tipo_cliente
+);
+-------------------------
+create table ventas(
+    id_venta number primary key,
+    fecha_venta date,
+    total_venta number,
+    id_empleado number references empleado,
+    id_numerocliente number references clientes
+);
+
+CREATE TABLE detalle_ventas(
+    id_cantidadventa   number primary key,
+    importeventa   number,
+    id_venta   number references ventas,
+    id_comida  number references comida   
+);
+---------------------------
+
+--secuenciales
+CREATE SEQUENCE sq_tipocomida
+START WITH 1
+INCREMENT BY 1
+MINVALUE 1
+NOCYCLE;
+
+CREATE SEQUENCE sq_tipoempleado
+START WITH 1
+INCREMENT BY 1
+MINVALUE 1
+NOCYCLE;
+
+CREATE SEQUENCE sq_tipocliente
+START WITH 1
+INCREMENT BY 1
+MINVALUE 1
+NOCYCLE;
+
+CREATE SEQUENCE sq_comida
+START WITH 1
+INCREMENT BY 1
+MINVALUE 1
+NOCYCLE;
+
+CREATE SEQUENCE sq_empleado
+START WITH 1
+INCREMENT BY 1
+MINVALUE 1
+NOCYCLE;
+
+CREATE SEQUENCE sq_clientes
+START WITH 1
+INCREMENT BY 1
+MINVALUE 1
+NOCYCLE;
+
+CREATE SEQUENCE sq_ventas
+START WITH 1
+INCREMENT BY 1
+MINVALUE 1
+NOCYCLE;
+
+CREATE SEQUENCE sq_detalleventas
+START WITH 1
+INCREMENT BY 1
+MINVALUE 1
+NOCYCLE;
+--------------------------------
+--Registro de datos de tipocomida
+INSERT INTO tipo_comida VALUES (
+    sq_tipocomida.NEXTVAL,
+    'Comida marina'
+);
+INSERT INTO tipo_comida VALUES (
+    sq_tipocomida.NEXTVAL,
+    'Comida criolla'
+);
+
+INSERT INTO tipo_comida VALUES (
+    sq_tipocomida.NEXTVAL,
+    'Comida de la selva'
+);
+INSERT INTO tipo_comida VALUES (
+    sq_tipocomida.NEXTVAL,
+    'Platos a la carta'
+);
+INSERT INTO tipo_comida VALUES (
+    sq_tipocomida.NEXTVAL,
+    'Entradas'
+);
+INSERT INTO tipo_comida VALUES (
+    sq_tipocomida.NEXTVAL,
+    'Sopas'
+);
+INSERT INTO tipo_comida VALUES (
+    sq_tipocomida.NEXTVAL,
+    'Ensalada'
+);
+INSERT INTO tipo_comida VALUES (
+    sq_tipocomida.NEXTVAL,
+    'Guarniciones'
+);
+INSERT INTO tipo_comida VALUES (
+    sq_tipocomida.NEXTVAL,
+    'Bebidas'
+);
+commit;
+---------------------------------
+
+--Registro de tipo de empleado
+INSERT INTO tipo_empleado VALUES (
+    sq_tipoempleado.NEXTVAL,
+    'ayudante'
+);
+INSERT INTO tipo_empleado VALUES (
+    sq_tipoempleado.NEXTVAL,
+    'planillla'
+);
+INSERT INTO tipo_empleado VALUES (
+    sq_tipoempleado.NEXTVAL,
+    'externo'
+);
+commit;
+---------------------------------
+--Registro de tipo de cliente
+INSERT INTO tipo_cliente VALUES (
+    sq_tipocliente.NEXTVAL,
+    'con reservacion'
+);
+INSERT INTO tipo_cliente VALUES (
+    sq_tipocliente.NEXTVAL,
+    'sin reservacion'
+);
+commit;
+---------------------------------------
+--Registro de comida
+INSERT INTO comida VALUES (
+    sq_comida.NEXTVAL,
+    'Ceviche','Ceviche de lenguado + con chicharrón + yuca',20,1
+);
+INSERT INTO comida VALUES (
+    sq_comida.NEXTVAL,
+    'Lomo Saltado','Lomo fino + Papas + Arroz',18,2
+);
+INSERT INTO comida VALUES (
+    sq_comida.NEXTVAL,
+    'Tacacho con cecina','Cecina ahumada + tacacho + ají',18,3
+);
+INSERT INTO comida VALUES (
+    sq_comida.NEXTVAL,
+    'Ensalada Rusa','Ensalada rusa + verduras',10,5
+);
+
+INSERT INTO comida VALUES (
+   sq_comida.NEXTVAL,
+    'Porcion de papas fritas', 'Porción mediana de papas',10,5
+);
+
+INSERT INTO comida VALUES (
+    sq_comida.NEXTVAL,
+    'Papa a la huancaina','Papa a la huancaína + aceituna',12,4
+);
+
+INSERT INTO comida VALUES (
+    sq_comida.NEXTVAL,
+    'Arroz con pollo','Receta tradicional de la casa',18,4
+);
+
+INSERT INTO comida VALUES (
+    sq_comida.NEXTVAL,
+    'Caldo de gallina','Caldo + presa',15,6
+);
+
+INSERT INTO comida VALUES (
+    sq_comida.NEXTVAL,
+    'Jarra de maracuya','Jarra de 1/2 litro',12,9
+);
+commit;
+---------------------------------------
+--Registro de empleados
+insert into empleado values(
+    sq_empleado.nextval,
+    'Juan',
+    'Rosas',
+    49391780,
+    'H',
+    'Av. Abancay 133',
+    987853612,
+    123,
+    1
+);
+
+insert into empleado values(
+    sq_empleado.nextval,
+    'Maria',
+    'Canales',
+    15188465,
+    'M',
+    'Av Alfonso Ugarte 421',
+    968526956,
+    321,
+    2
+);
+
+insert into empleado values(
+    sq_empleado.nextval,
+    'Alberto',
+    'Bautista',
+    51603533,
+    'H',
+    'Av Angamos 666',
+    981596311,
+    432,
+    3
+);
+
+insert into empleado values(
+    sq_empleado.nextval,
+    'Angie',
+    'Otero',
+    41202649,
+    'M',
+    'Av Salaverry 245',
+    911526878,
+    103,
+    3
+);
+
+insert into empleado values(
+    sq_empleado.nextval,
+    'Camilo',
+    'Sesto',
+    53521357,
+    'H',
+    'Av Javier Prado 654',
+    916784478,
+    104,
+    3
+);
+
+insert into empleado values(
+    sq_empleado.nextval,
+    'Cesar',
+    'Reyes',
+    16397669,
+    'H',
+    'Av Nicolás de Piérola 234',
+    917264528,
+    837,
+    2
+);
+
+insert into empleado values(
+    sq_empleado.nextval,
+    'Mateo',
+    'Fernandez',
+    60487878,
+    'H',
+    'Av Perú 666',
+    973465182,
+    267,
+    1
+);
+
+insert into empleado values(
+    sq_empleado.nextval,
+    'Susana',
+    'Nuñez',
+    27676956,
+    'M',
+    'Av Grau, 123',
+    928375668,
+    234,
+    3
+);
+
+insert into empleado values(
+    sq_empleado.nextval,
+    'Carla',
+    'Palermo',
+    99559928,
+    'M',
+    'Av Matellini 1023',
+    987736546,
+    345,
+    2
+);
+
+insert into empleado values(
+    sq_empleado.nextval,
+    'Esther',
+    'Quintanilla',
+    89058443,
+    'M',
+    'Av Chorrillos 847',
+    912923945,
+    678,
+    3
+);
+
+insert into empleado values(
+    sq_empleado.nextval,
+    'Joel',
+    'Muñoz',
+    58135347,
+    'H',
+    'Av. Alejandra Guzmán ',
+    911257689,
+    456,
+    2
+);
+
+insert into empleado values(
+    sq_empleado.nextval,
+    'Adrian',
+    'Granados',
+    53850900,
+    'H',
+    'Av. Alexa Ramón',
+    963852011,
+    346,
+    2
+);
+
+
+insert into empleado values(
+    sq_empleado.nextval,
+    'Carla',
+    'Fritz',
+    72182191,
+    'M',
+    'Jr. Eduardo Tamez',
+    987526410,
+    786,
+    1
+);
+
+insert into empleado values(
+    sq_empleado.nextval,
+    'Frida',
+    'Tequila',
+    987654321,
+    'M',
+    'Cl. Zoe Aparicio',
+    987526410,
+    457,
+    3
+);
+
+insert into empleado values(
+    sq_empleado.nextval,
+    'Marlene',
+    'Gonzalez',
+    26124740,
+    'M',
+    'Cl. Christopher Maya',
+    912345678,
+    458,
+    1
+);
+commit;
+---------------------------------------
+--Registro de cliente
+INSERT INTO clientes VALUES (
+    sq_clientes.NEXTVAL, 'Dolores', 'Fernandez', 74836475, 'M', 'Jr. Luciano Almanza # 055', 956467564, 1
+);
+INSERT INTO clientes VALUES (
+    sq_clientes.NEXTVAL, 'Manuel', 'Toro', 46573645, 'H', 'Av. Nicole Garay # 5', 937465264, 2
+);
+INSERT INTO clientes VALUES (
+    sq_clientes.NEXTVAL, 'Sabina', 'Quintana', 74658375, 'M', 'Cl. Juan Pablo C.', 912373645, 2
+);
+INSERT INTO clientes VALUES (
+    sq_clientes.NEXTVAL, 'Eloi', 'Villar', 45638475, 'H', 'Urb. Sebastián Vásquez', 984726453, 1
+);
+INSERT INTO clientes VALUES (
+    sq_clientes.NEXTVAL, 'Edgar', 'Lopez', 64756374, 'H', 'Av. Alma Gamez # 8', 972635476, 1
+);
+INSERT INTO clientes VALUES (
+    sq_clientes.NEXTVAL, 'Sara', 'del Pino', 16238465, 'M', 'Av. Emmanuel Montenegro', 986453674, 2
+);
+INSERT INTO clientes VALUES (
+    sq_clientes.NEXTVAL, 'David', 'Suarez', 84756347, 'H', 'Jr. Alessandra Herrera', 988736453, 2
+);
+INSERT INTO clientes VALUES (
+    sq_clientes.NEXTVAL, 'Juan', 'Mata', 37465834, 'H', 'Urb. Andrés Tijerina', 987364524, 1
+);
+INSERT INTO clientes VALUES (
+    sq_clientes.NEXTVAL, 'Rocio', 'Perez', 78946573, 'M', 'Urb. Juan Martín Villalobos', 936472635, 2
+);
+INSERT INTO clientes VALUES (
+    sq_clientes.NEXTVAL, 'Lucia', 'Huerta', 37465847, 'M', 'Cl. Tomas Saucedo', 936452635, 2
+);
+INSERT INTO clientes VALUES (
+    sq_clientes.NEXTVAL, 'Carlos', 'Santana', 74658374, 'H', 'Urb. Elena Serrano', 936452735, 1
+);
+INSERT INTO clientes VALUES (
+    sq_clientes.NEXTVAL, 'Alejandro', 'Sotomayor', 84756354, 'H', 'Jr. Ricardo Concepción', 936253746, 2
+);
+INSERT INTO clientes VALUES (
+    sq_clientes.NEXTVAL, 'Andres', 'Suarez', 74658374, 'H', 'Cl. Ana Paula Zambrano', 946356475, 1
+);
+INSERT INTO clientes VALUES (
+    sq_clientes.NEXTVAL, 'Fernando', 'Vivar', 84756354, 'H', 'Av. Juan Esteban S.', 936475637, 1
+);
+INSERT INTO clientes VALUES (
+    sq_clientes.NEXTVAL, 'Ana', 'Fuertes', 84756354, 'M', 'Jr. Julia Guerra', 936475837, 2
+);
+commit;
+
+-------------------------------------------------
+--Registro de venta
+INSERT INTO ventas VALUES (
+    sq_ventas.NEXTVAL, sysdate, 1, 1, 1 
+);
+INSERT INTO ventas VALUES (
+    sq_ventas.NEXTVAL, sysdate, 1, 2, 2
+);
+INSERT INTO ventas VALUES (
+    sq_ventas.NEXTVAL, sysdate, 1, 3, 3
+);
+INSERT INTO ventas VALUES (
+    sq_ventas.NEXTVAL, sysdate, 2, 4, 4
+);
+INSERT INTO ventas VALUES (
+    sq_ventas.NEXTVAL, sysdate, 2, 5, 5
+);
+INSERT INTO ventas VALUES (
+    sq_ventas.NEXTVAL, sysdate, 1, 6, 6
+);
+INSERT INTO ventas VALUES (
+    sq_ventas.NEXTVAL, sysdate, 1, 7, 7
+);
+INSERT INTO ventas VALUES (
+    sq_ventas.NEXTVAL, sysdate, 2, 8, 8
+);
+INSERT INTO ventas VALUES (
+    sq_ventas.NEXTVAL, sysdate, 2, 9, 9
+);
+INSERT INTO ventas VALUES (
+    sq_ventas.NEXTVAL, sysdate, 1, 10, 10
+);
+INSERT INTO ventas VALUES (
+    sq_ventas.NEXTVAL, sysdate, 2, 11, 11
+);
+INSERT INTO ventas VALUES (
+    sq_ventas.NEXTVAL, sysdate, 2, 12, 12
+);
+INSERT INTO ventas VALUES (
+    sq_ventas.NEXTVAL, sysdate, 1, 13, 13
+);
+INSERT INTO ventas VALUES (
+    sq_ventas.NEXTVAL, sysdate, 2, 14, 14
+);
+INSERT INTO ventas VALUES (
+    sq_ventas.NEXTVAL, sysdate, 2, 15, 15
+);
+commit;
+
+------------------------------------------------------
+--Registro de detalle de venta
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    15,1,1
+);
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    13,2,4
+);
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    24,3,6
+);
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    70,4,2
+);
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    24,5,1
+);
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    13,6,5
+);
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    13,6,5
+);
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    15,7,8
+);
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    32,8,9
+);
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    34,9,7
+);
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    34,9,7
+);
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    23,10,13
+);
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    28,11,4
+);
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    32,12,5
+);
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    18,13,1
+);
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    28,14,3
+);
+INSERT INTO detalle_ventas VALUES (
+    sq_detalleventas.NEXTVAL,
+    72,15,2
+);
+commit;
+------------------------------------------------
+--Eliminar datos
+DELETE FROM venta WHERE
+    id_venta = 14;
+
+DELETE FROM venta WHERE
+    id_venta = 12;
+
+DELETE FROM venta WHERE
+    id_venta = 10;
+    
+DELETE FROM venta WHERE
+    id_venta = 8;
+    
+DELETE FROM venta WHERE
+    id_venta = 6;
+    
+DELETE FROM venta WHERE
+    id_venta = 4;
+----------------------------------
+update ventas
+set
+    total_venta = '1'
+WHERE
+    id_venta = 5;
+    
+ update ventas
+set
+    total_venta = '2'
+WHERE
+    id_venta = 7;
+    
+    update ventas
+set
+    total_venta = '1'
+WHERE
+    id_venta = 9;
+    
+    update ventas
+set
+    total_venta = '1'
+WHERE
+    id_venta= 11;
+    
+    update ventas
+set
+    total_venta = '2'
+WHERE
+    id_venta = 13;
+    
+    update ventas
+set
+    total_venta = '1'
+WHERE
+    id_venta = 15;
